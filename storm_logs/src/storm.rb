@@ -2,7 +2,6 @@ require 'json'
 require 'rest-client'
 require 'time'
 
-
 rest_arr = Array.new
 entry_arr = Array.new
 
@@ -32,9 +31,15 @@ puts log_entry
 entry_arr.push(log_entry)
 #loop end
 
+if(!File.exist?(/userapps/logs/storm.log)) {
+  File.new(/userapps/logs/storm.log)
+}
+log_file = File.open("/userapps/logs/storm.log", "w")
 #loop begin
 ## write each string index (reprenting one log entry) to a file (same one that logstash is watching)
 entry_arr.each do |log|
   #write to file
+  log_file.write(log + "\n")
 end
 #loop end
+log_file.close
